@@ -6,6 +6,7 @@ on:
 
 jobs:
     build-a:
+        name: build-a
         runs-on: ubuntu-latest
         steps:
             - run: echo "Hello, World!"
