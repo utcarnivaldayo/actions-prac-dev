@@ -1,4 +1,4 @@
-name: Hello, World!
+name: Deploy from dev repository
 on:
     push:
         tags:
@@ -10,8 +10,20 @@ jobs:
         name: deploy-prod
         runs-on: ubuntu-22.04
         steps:
-            - name: Checkout
+            - name: Checkout prod repository
               uses: actions/checkout@v4
               with:
-                path: main
-            - run: ls && cd main && ls
+                path: actions-prac-dev
+            - name: Checkout dev repository
+              uses: actions/checkout@v4
+              with:
+                repository: utcarnivaldayo/actions-prac-prod
+                path: actions-prac-prod
+            - run: |
+                  cd actions-prac-dev
+                  git branch
+                  cd ~
+            - run: |
+                  cd actions-prac-prod
+                  git branch
+                  cd ~
