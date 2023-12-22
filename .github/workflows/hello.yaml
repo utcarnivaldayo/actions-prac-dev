@@ -1,8 +1,11 @@
 name: Hello, World!
-on: push
+on:
+    push:
+        tags:
+            - v*
 
 jobs:
-    build:
+    build-a:
         runs-on: ubuntu-latest
         steps:
             - run: echo "Hello, World!"
