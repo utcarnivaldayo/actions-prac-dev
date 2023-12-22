@@ -5,7 +5,7 @@ on:
             - v*
 
 jobs:
-    build-a:
+    build:
         name: build-a
         runs-on: ubuntu-latest
         steps:
