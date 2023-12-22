@@ -14,4 +14,4 @@ jobs:
               uses: actions/checkout@v4
               with:
                 path: main
-            - run: ls
+            - run: ls && cd main && ls
