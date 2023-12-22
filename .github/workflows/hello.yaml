@@ -6,8 +6,12 @@ on:
     workflow_dispatch:
 
 jobs:
-    build:
-        name: build-a
-        runs-on: ubuntu-latest
+    deploy-prod:
+        name: deploy-prod
+        runs-on: ubuntu-22.04
         steps:
-            - run: echo "Hello, World!"
+            - name: Checkout
+              uses: actions/checkout@v4
+              with:
+                path: main
+            - run: ls
