@@ -58,6 +58,6 @@ jobs:
           git config --local user.email "${{ env.GITHUB_MAIL }}"
           git add .
           git commit -m "generated"
-          git puh -u origin main
+          git push -u origin main
 # - name: Commit and push to prod repository
 # git remote set-url origin "https://${{github.actor}}:${{secrets.GITHUB_TOKEN}}@github.com/utcarnivaldayo/actions-prac-prod"
