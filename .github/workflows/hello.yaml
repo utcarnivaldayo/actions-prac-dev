@@ -5,28 +5,51 @@ on:
             - v*
     workflow_dispatch:
 
+env:
+    # DEV_REPOSITORY: utcarnivaldayo/actions-prac-dev
+    PROD_REPOSITORY: utcarnivaldayo/actions-prac-prod
+
+    # パイプラインでreactをビルドするために使用するnodeのバージョン
+    NODE_VERSION: 20.10.0
+
+    # 開発リポジトリのローカルリポジトリ名
+    LOCAL_DEV_REPOSITORY: dev
+
+    # 本番リポジトリのローカルリポジトリ名
+    LOCAL_PROD_REPOSITORY: prod
+
+    # パイプラインで使用するubuntuのバージョン
+    UBUNTU_VERSION: 22.04
+
 jobs:
     deploy-prod:
         name: deploy-prod
-        runs-on: ubuntu-22.04
+        runs-on: ubuntu-${UBUNTU_VERSION}
         steps:
-            - name: Checkout prod repository
-              uses: actions/checkout@v4
-              with:
-                path: actions-prac-dev
             - name: Checkout dev repository
               uses: actions/checkout@v4
               with:
-                repository: utcarnivaldayo/actions-prac-prod
-                path: actions-prac-prod
+                # 自身のリポジトリがデフォルトで設定されているので明示的な指定は不要
+                # repository: ${DEV_REPOSITORY}
+                # dev ディレクトリを作成してクローンする
+                path: ${LOCAL_DEV_REPOSITORY}
+            - name: Checkout prod repository
+              uses: actions/checkout@v4
+              with:
+                repository: ${PROD_REPOSITORY}
+                path: ${LOCAL_PROD_REPOSITORY}
             - name: Install node
               uses: actions/setup-node@v4
               with:
-                node-version: 20.10.0
-            - name: Check node_modules and package-lock.json
+                node-version: ${NODE_VERSION}
+            - name: Install node modules
               run: |
-                pwd && ls -la
-                echo "${GITHUB_WORKSPACE}"
-                cd actions-prac-dev
-                test ! -d node_modules && echo "Error: node_modules does not exist !!!" && exit 1
-                test ! -e package-lock.json && echo "Error: package-lock.json does not exist !!!" && exit 1
+                test ! -e package-lock.json && echo "Error: package-lock.json does not exist." && exit 1
+                npm ci
+              working-directory: ${HOME}/${LOCAL_DEV_REPOSITORY}
+            - name: Build react
+              run: npm run build
+              working-directory: ${HOME}/${LOCAL_DEV_REPOSITORY}
+            - name: Check build result
+              run: ls -la
+              working-directory: ${HOME}/${LOCAL_DEV_REPOSITORY}/dist
