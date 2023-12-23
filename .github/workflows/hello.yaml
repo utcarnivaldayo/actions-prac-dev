@@ -23,10 +23,6 @@ jobs:
               uses: actions/setup-node@v4
               with:
                 node-version: 20.10.0
-            - name: Check node and npm version
-              run: |
-                node -v
-                npm -v
             - name: Check node_modules and package-lock.json
               run: |
                 cd actions-prac-dev
