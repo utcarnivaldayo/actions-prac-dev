@@ -25,6 +25,7 @@ jobs:
                 node-version: 20.10.0
             - name: Check node_modules and package-lock.json
               run: |
+                echo "${GITHUB_WORKSPACE}"
                 cd actions-prac-dev
                 test ! -d node_modules && echo "Error: node_modules does not exist !!!" && exit 1
                 test ! -e package-lock.json && echo "Error: package-lock.json does not exist !!!" && exit 1
