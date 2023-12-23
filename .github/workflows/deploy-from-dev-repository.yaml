@@ -46,14 +46,10 @@ jobs:
           cd ${GITHUB_WORKSPACE}/prod
           pwd && ls -la
       - name: Commit and push to prod repository
-        env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-          MY_CREDENTIALS: my-credentials
         run: |
           set -x
           cd ${GITHUB_WORKSPACE}/prod
           git remote -v
-          echo ${GITHUB_TOKEN} > ${GITHUB_WORKSPACE}/${MY_CREDENTIALS}
           git config --local user.name github-actions
           git config --local user.email github-actions@github.com
           git add .
