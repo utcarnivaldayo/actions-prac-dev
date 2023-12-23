@@ -53,8 +53,8 @@ jobs:
           set -x
           cd ${GITHUB_WORKSPACE}/prod
           git remote -v
-          git config --local user.name ${{ env.GITHUB_NAME }}
-          git config --local user.email ${{ env.GITHUB_MAIL }}
+          git config --global user.name ${{ env.GITHUB_NAME }}
+          git config --global user.email ${{ env.GITHUB_MAIL }}
           git remote set-url origin "https://github-actions:${{ secrets.GITHUB_TOKEN }}@github.com/utcarnivaldayo/actions-prac-prod.git"
           git remote -v
           git add .
