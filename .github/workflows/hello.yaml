@@ -8,23 +8,19 @@ on:
 env:
     # DEV_REPOSITORY: utcarnivaldayo/actions-prac-dev
     PROD_REPOSITORY: utcarnivaldayo/actions-prac-prod
-
     # パイプラインでreactをビルドするために使用するnodeのバージョン
     NODE_VERSION: 20.10.0
-
     # 開発リポジトリのローカルリポジトリ名
     LOCAL_DEV_REPOSITORY: dev
-
     # 本番リポジトリのローカルリポジトリ名
     LOCAL_PROD_REPOSITORY: prod
-
     # パイプラインで使用するubuntuのバージョン
     UBUNTU_VERSION: 22.04
 
 jobs:
     deploy-prod:
         name: deploy-prod
-        runs-on: ubuntu-${UBUNTU_VERSION}
+        runs-on: ubuntu-${{env.UBUNTU_VERSION}}
         steps:
             - name: Checkout dev repository
               uses: actions/checkout@v4
