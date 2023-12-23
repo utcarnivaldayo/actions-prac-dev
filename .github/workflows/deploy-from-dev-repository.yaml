@@ -30,6 +30,7 @@ jobs:
           git config --local user.name "${{ env.GITHUB_NAME }}"
           git config --local user.email "${{ env.GITHUB_MAIL }}"
           git remote -v
+          git config --local url.https://${{secrets.PERSONAL_ACCESS_TOKEN}}@github.com/.insteadOf https://github.com/
       - name: Install node
         uses: actions/setup-node@v4
         with:
@@ -60,4 +61,3 @@ jobs:
           git push
 # - name: Commit and push to prod repository
 # git remote set-url origin "https://${{github.actor}}:${{secrets.GITHUB_TOKEN}}@github.com/utcarnivaldayo/actions-prac-prod"
-# git config --local url.https://${{secrets.PERSONAL_ACCESS_TOKEN}}@github.com/.insteadOf https://github.com/
