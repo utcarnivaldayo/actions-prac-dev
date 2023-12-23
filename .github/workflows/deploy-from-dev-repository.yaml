@@ -48,7 +48,7 @@ jobs:
           cp -pr ${GITHUB_WORKSPACE}/dev/dist/* ${GITHUB_WORKSPACE}/prod/
           cd ${GITHUB_WORKSPACE}/prod
           pwd && ls -la
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
       - run: |
           cd ${GITHUB_WORKSPACE}/prod
           git config user.name ${{ env.GITHUB_NAME }}
