@@ -10,8 +10,7 @@ jobs:
   deploy-prod:
     name: deploy-prod
     runs-on: ubuntu-22.04
-    permissions:
-      contents: write
+    permissions: write-all
     steps:
       - name: Checkout dev repository
         uses: actions/checkout@v4
