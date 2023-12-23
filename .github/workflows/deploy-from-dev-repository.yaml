@@ -22,15 +22,11 @@ jobs:
         with:
           path: dev
       - name: Checkout prod repository
-        run: |
-          set -x
-          cd ${GITHUB_WORKSPACE}
-          git clone https://github.com/utcarnivaldayo/actions-prac-prod.git prod
-          cd ${GITHUB_WORKSPACE}/prod
-          git config --local user.name "${{ env.GITHUB_NAME }}"
-          git config --local user.email "${{ env.GITHUB_MAIL }}"
-          git remote -v
-          git config --local url.https://${{secrets.PERSONAL_ACCESS_TOKEN}}@github.com/.insteadOf https://github.com/
+        uses: actions/checkout@v4
+        with:
+          repository: utcarnivaldayo/actions-prac-prod
+          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          path: prod
       - name: Install node
         uses: actions/setup-node@v4
         with:
@@ -56,6 +52,8 @@ jobs:
       - name: Commit and push to prod repository
         run: |
           cd ${GITHUB_WORKSPACE}/prod
+          git config --local user.name "${{ env.GITHUB_NAME }}"
+          git config --local user.email "${{ env.GITHUB_MAIL }}"
           git add .
           git commit -m "generated"
           git push
