@@ -56,6 +56,7 @@ jobs:
           git remote -v
           git config --local user.name ${{ env.GITHUB_NAME }}
           git config --local user.email ${{ env.GITHUB_MAIL }}
+          git remote set-url origin "https://${{ secrets.GITHUB_TOKEN }}@github.com/utcarnivaldayo/actions-prac-prod.git"
           git add .
           git commit -m "generated"
           git status
