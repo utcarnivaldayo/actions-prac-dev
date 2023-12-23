@@ -50,8 +50,8 @@ jobs:
           pwd && ls -la
       - name: Commit and push to prod repository
         run: |
-          git config --global user.name ${{ env.GITHUB_NAME }}
-          git config --global user.email ${{ env.GITHUB_MAIL }}
+          git config user.name ${{ env.GITHUB_NAME }}
+          git config user.email ${{ env.GITHUB_MAIL }}
           git add .
           git commit -m "generated"
           git status
