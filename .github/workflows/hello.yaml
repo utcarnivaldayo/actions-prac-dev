@@ -28,13 +28,14 @@ jobs:
               run: |
                 pwd && ls -la
                 cd ${GITHUB_WORKSPACE}/dev
+                pwd && ls -la
                 test ! -e package-lock.json && echo "Error: package-lock.json does not exist." && exit 1
                 npm ci
             - name: Build react
               run: |
+                pwd && ls -la
                 cd ${GITHUB_WORKSPACE}/dev
+                pwd && ls -la
                 npm run build
-            - name: Check build result
-              run: |
-                cd ${GITHUB_WORKSPACE}/dev/dist
-                ls -la
+
+
