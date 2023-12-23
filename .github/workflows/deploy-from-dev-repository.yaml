@@ -20,44 +20,33 @@ jobs:
     runs-on: ubuntu-22.04
     permissions: write-all
     steps:
-      - name: Checkout dev repository
-        uses: actions/checkout@v4
-        with:
-          path: ${{ env.LOCAL_DEV_REPOSITORY }}
-      - name: Checkout prod repository
-        run: |
-          git clone https://github.com/${{env.REMOTE_PROD_REPOSITORY}}.git prod
-          cd ${{env.LOCAL_PROD_REPOSITORY}}
-          git remote -v
-          git remote set-url origin "https://${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/${{ env.REMOTE_PROD_REPOSITORY }}.git"
-          git remote -v
-          git fetch --prune
-          git pull
+      - name: Checkout ${{ env.LOCAL_DEV_REPOSITORY }} repository
+        run: git clone -b main --single-branch --depth=1 https://${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/${{ env.REMOTE_PROD_REPOSITORY }}.git ${{ env.LOCAL_DEV_REPOSITORY }}
+      - name: Checkout ${{ env.LOCAL_PROD_REPOSITORY}} repository
+        run: git clone -b main --single-branch https://${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/${{ env.REMOTE_PROD_REPOSITORY }}.git ${{ env.LOCAL_PROD_REPOSITORY }}
       - name: Install node
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSIOIN }}
       - name: Install node modules
         run: |
-          pwd && ls -la
-          cd ${GITHUB_WORKSPACE}/${{ env.LOCAL_DEV_REPOSITORY }}
+          cd ${{ env.LOCAL_DEV_REPOSITORY }}
           pwd && ls -la
           test ! -e package-lock.json && echo "Error: package-lock.json does not exist." && exit 1
           npm ci
       - name: Build react
         run: |
-          pwd && ls -la
-          cd ${GITHUB_WORKSPACE}/${{ env.LOCAL_DEV_REPOSITORY }}
+          cd ${{ env.LOCAL_DEV_REPOSITORY }}
           pwd && ls -la
           npm run build
       - name: Copy build artifacts
         run: |
-          cp -pr ${GITHUB_WORKSPACE}/${{ env.LOCAL_DEV_REPOSITORY }}/dist/* ${GITHUB_WORKSPACE}/${{ env.LOCAL_PROD_REPOSITORY }}/
-          cd ${GITHUB_WORKSPACE}/${{ env.LOCAL_PROD_REPOSITORY }}
+          cp -pr ${{ env.LOCAL_DEV_REPOSITORY }}/dist/* ${{ env.LOCAL_PROD_REPOSITORY }}/
+          cd ${{ env.LOCAL_PROD_REPOSITORY }}
           pwd && ls -la
-      - name: Commit and push to prod repository
+      - name: Commit and push to ${{ env.LOCAL_PROD_REPOSITORY }} repository
         run: |
-          cd ${GITHUB_WORKSPACE}/${{ env.LOCAL_PROD_REPOSITORY }}
+          cd ${{ env.LOCAL_PROD_REPOSITORY }}
           git config --local user.name "${{ env.GITHUB_NAME }}"
           git config --local user.email "${{ env.GITHUB_MAIL }}"
           git add .
