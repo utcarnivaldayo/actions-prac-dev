@@ -39,7 +39,7 @@ jobs:
           npm run build
       - name: Copy build artifacts
         run: |
-          cp -r ${GITHUB_WORKSPACE}/dev/dist/ ${GITHUB_WORKSPACE}/prod/
+          cp -pr ${GITHUB_WORKSPACE}/dev/dist/* ${GITHUB_WORKSPACE}/prod/
           cd ${GITHUB_WORKSPACE}/prod
           pwd && ls -la
 
