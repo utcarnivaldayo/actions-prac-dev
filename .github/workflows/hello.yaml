@@ -5,47 +5,36 @@ on:
             - v*
     workflow_dispatch:
 
-env:
-    # DEV_REPOSITORY: utcarnivaldayo/actions-prac-dev
-    PROD_REPOSITORY: utcarnivaldayo/actions-prac-prod
-    # パイプラインでreactをビルドするために使用するnodeのバージョン
-    NODE_VERSION: 20.10.0
-    # 開発リポジトリのローカルリポジトリ名
-    LOCAL_DEV_REPOSITORY: dev
-    # 本番リポジトリのローカルリポジトリ名
-    LOCAL_PROD_REPOSITORY: prod
-    # パイプラインで使用するubuntuのバージョン
-    UBUNTU_VERSION: 22.04
 
 jobs:
     deploy-prod:
         name: deploy-prod
-        runs-on: ubuntu-${{env.UBUNTU_VERSION}}
+        runs-on: ubuntu-22.04
         steps:
             - name: Checkout dev repository
               uses: actions/checkout@v4
               with:
-                # 自身のリポジトリがデフォルトで設定されているので明示的な指定は不要
-                # repository: ${DEV_REPOSITORY}
-                # dev ディレクトリを作成してクローンする
-                path: ${LOCAL_DEV_REPOSITORY}
+                path: dev
             - name: Checkout prod repository
               uses: actions/checkout@v4
               with:
-                repository: ${PROD_REPOSITORY}
-                path: ${LOCAL_PROD_REPOSITORY}
+                repository: utcarnivaldayo/actions-prac-prod
+                path: prod
             - name: Install node
               uses: actions/setup-node@v4
               with:
-                node-version: ${NODE_VERSION}
+                node-version: 20.10.0
             - name: Install node modules
               run: |
+                cd ${HOME}/dev
+                pwd && ls -la
                 test ! -e package-lock.json && echo "Error: package-lock.json does not exist." && exit 1
                 npm ci
-              working-directory: ${HOME}/${LOCAL_DEV_REPOSITORY}
             - name: Build react
-              run: npm run build
-              working-directory: ${HOME}/${LOCAL_DEV_REPOSITORY}
+              run: |
+                cd ${HOME}/dev
+                npm run build
             - name: Check build result
-              run: ls -la
-              working-directory: ${HOME}/${LOCAL_DEV_REPOSITORY}/dist
+              run: |
+                cd ${HOME}/dev/dist
+                ls -la
