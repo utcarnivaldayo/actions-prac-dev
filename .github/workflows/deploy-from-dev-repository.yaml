@@ -1,41 +1,41 @@
 name: Deploy from dev repository
 on:
-    push:
-        tags:
-            - v*
-    workflow_dispatch:
+  push:
+    tags:
+      - v*
+  workflow_dispatch:
 
 
 jobs:
-    deploy-prod:
-        name: deploy-prod
-        runs-on: ubuntu-22.04
-        steps:
-            - name: Checkout dev repository
-              uses: actions/checkout@v4
-              with:
-                path: dev
-            - name: Checkout prod repository
-              uses: actions/checkout@v4
-              with:
-                repository: utcarnivaldayo/actions-prac-prod
-                path: prod
-            - name: Install node
-              uses: actions/setup-node@v4
-              with:
-                node-version: 20.10.0
-            - name: Install node modules
-              run: |
-                pwd && ls -la
-                cd ${GITHUB_WORKSPACE}/dev
-                pwd && ls -la
-                test ! -e package-lock.json && echo "Error: package-lock.json does not exist." && exit 1
-                npm ci
-            - name: Build react
-              run: |
-                pwd && ls -la
-                cd ${GITHUB_WORKSPACE}/dev
-                pwd && ls -la
-                npm run build
+  deploy-prod:
+    name: deploy-prod
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout dev repository
+        uses: actions/checkout@v4
+        with:
+          path: dev
+      - name: Checkout prod repository
+        uses: actions/checkout@v4
+        with:
+          repository: utcarnivaldayo/actions-prac-prod
+          path: prod
+      - name: Install node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.10.0
+      - name: Install node modules
+        run: |
+          pwd && ls -la
+          cd ${GITHUB_WORKSPACE}/dev
+          pwd && ls -la
+          test ! -e package-lock.json && echo "Error: package-lock.json does not exist." && exit 1
+          npm ci
+      - name: Build react
+        run: |
+          pwd && ls -la
+          cd ${GITHUB_WORKSPACE}/dev
+          pwd && ls -la
+          npm run build
 
 
