@@ -29,6 +29,7 @@ jobs:
           git config --local user.name ${{ env.GITHUB_NAME }}
           git config --local user.email ${{ env.GITHUB_MAIL }}
           git remote -v
+          git config --global url.https://${{secrets.PERSONAL_ACCESS_TOKEN}}@github.com/.insteadOf https://github.com/
       - name: Install node
         uses: actions/setup-node@v4
         with:
