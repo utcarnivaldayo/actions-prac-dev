@@ -26,8 +26,8 @@ jobs:
                 node-version: 20.10.0
             - name: Install node modules
               run: |
-                cd ${HOME}/dev
                 pwd && ls -la
+                cd ${HOME}/dev
                 test ! -e package-lock.json && echo "Error: package-lock.json does not exist." && exit 1
                 npm ci
             - name: Build react
