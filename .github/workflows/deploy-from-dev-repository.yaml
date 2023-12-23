@@ -60,7 +60,6 @@ jobs:
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-          branch: main
           directory: prod
 # - name: Commit and push to prod repository
 # git remote set-url origin "https://${{github.actor}}:${{secrets.GITHUB_TOKEN}}@github.com/utcarnivaldayo/actions-prac-prod"
