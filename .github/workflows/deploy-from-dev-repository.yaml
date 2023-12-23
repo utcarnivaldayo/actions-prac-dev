@@ -62,4 +62,4 @@ jobs:
           git add .
           git commit -m "generated"
           git status
-          git push
+          git push -u origin main
