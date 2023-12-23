@@ -48,12 +48,13 @@ jobs:
           cp -pr ${GITHUB_WORKSPACE}/dev/dist/* ${GITHUB_WORKSPACE}/prod/
           cd ${GITHUB_WORKSPACE}/prod
           pwd && ls -la
-      - uses: actions/checkout@v4
-      - run: |
+      - name: Commit and push to prod repository
+        run: |
           pwd && ls -la
           cd ${GITHUB_WORKSPACE}/prod
           git config user.name ${{ env.GITHUB_NAME }}
           git config user.email ${{ env.GITHUB_MAIL }}
+          git remote set-url orign "https://${{github.actor}}:${{secrets.GITHUB_TOKEN}}@github.com/utcarnivaldayo/actions-prac-prod.git"
           git add .
           git commit -m "generated"
           git status
