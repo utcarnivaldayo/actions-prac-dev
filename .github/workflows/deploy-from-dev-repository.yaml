@@ -5,6 +5,10 @@ on:
       - v*
   workflow_dispatch:
 
+env:
+  GITHUB_MAIL: 41898282+github-actions[bot]@users.noreply.github.com
+  GITHUB_NAME: github-actions[bot]
+
 permissions:
   contents: write
 
@@ -50,8 +54,8 @@ jobs:
           set -x
           cd ${GITHUB_WORKSPACE}/prod
           git remote -v
-          git config --local user.name github-actions
-          git config --local user.email github-actions@github.com
+          git config --local user.name ${{ env.GITHUB_NAME }}
+          git config --local user.email ${{ env.GITHUB_MAIL }}
           git add .
           git commit -m "generated"
           git status
