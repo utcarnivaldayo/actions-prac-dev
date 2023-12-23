@@ -48,8 +48,8 @@ jobs:
           cp -pr ${GITHUB_WORKSPACE}/dev/dist/* ${GITHUB_WORKSPACE}/prod/
           cd ${GITHUB_WORKSPACE}/prod
           pwd && ls -la
-      - name: Commit and push to prod repository
-        run: |
+      - uses: actions/setup-node@v4
+      - run: |
           cd ${GITHUB_WORKSPACE}/prod
           git config user.name ${{ env.GITHUB_NAME }}
           git config user.email ${{ env.GITHUB_MAIL }}
@@ -57,3 +57,4 @@ jobs:
           git commit -m "generated"
           git status
           git push
+#- name: Commit and push to prod repository
