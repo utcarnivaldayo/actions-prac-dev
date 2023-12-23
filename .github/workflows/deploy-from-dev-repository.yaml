@@ -5,13 +5,13 @@ on:
       - v*
   workflow_dispatch:
 
+permissions:
+  contents: write
 
 jobs:
   deploy-prod:
     name: deploy-prod
     runs-on: ubuntu-22.04
-    permissions:
-      contents: write
       # statuses: write
     steps:
       - name: Checkout dev repository
@@ -56,7 +56,6 @@ jobs:
           echo ${GITHUB_TOKEN} > ${GITHUB_WORKSPACE}/${MY_CREDENTIALS}
           git config --local user.name github-actions
           git config --local user.email github-actions@github.com
-          git config --local credential.helper store --file ${GITHUB_WORKSPACE}/${MY_CREDENTIALS}
           git add .
           git commit -m "generated"
           git status
