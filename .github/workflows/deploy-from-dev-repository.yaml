@@ -25,6 +25,7 @@ jobs:
         run: |
           git clone https://github.com/utcarnivaldayo/actions-prac-prod.git prod
           cd prod
+          git pull
           git switch main
       - name: Install node
         uses: actions/setup-node@v4
