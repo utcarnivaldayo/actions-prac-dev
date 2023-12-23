@@ -23,6 +23,7 @@ jobs:
           path: dev
       - name: Checkout prod repository
         run: |
+          set -x
           cd ${GITHUB_WORKSPACE}
           git clone https://github.com/utcarnivaldayo/actions-prac-prod.git prod
           cd ${GITHUB_WORKSPACE}/prod
