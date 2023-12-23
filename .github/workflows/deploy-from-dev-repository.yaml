@@ -27,7 +27,6 @@ jobs:
           git clone https://github.com/utcarnivaldayo/actions-prac-prod.git prod
           git config --local user.name ${{ env.GITHUB_NAME }}
           git config --local user.email ${{ env.GITHUB_MAIL }}
-
       - name: Install node
         uses: actions/setup-node@v4
         with:
