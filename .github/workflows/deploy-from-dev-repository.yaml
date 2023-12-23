@@ -25,7 +25,7 @@ jobs:
         run: |
           git clone https://github.com/utcarnivaldayo/actions-prac-prod.git prod
           cd prod
-          git remote set-url origin "https://${{secrets.PERSONAL_ACCESS_TOKEN}}@github.com/utcarnivaldayo/actions-prac-prod.git"
+          git remote set-url origin "https://${{secrets.GITHUB_TOKEN}}@github.com/utcarnivaldayo/actions-prac-prod.git"
           git remote -v
           git fetch --prune
           git pull
