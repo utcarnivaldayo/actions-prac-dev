@@ -51,10 +51,12 @@ jobs:
       - name: Commit and push to prod repository
         run: |
           pwd && ls -la
+          echo ${{ github.actor }}
+          echo ${{ github.repository }}
           cd ${GITHUB_WORKSPACE}/prod
           git config user.name ${{ env.GITHUB_NAME }}
           git config user.email ${{ env.GITHUB_MAIL }}
-          git remote set-url origin "https://${{github.actor}}:${{secrets.GITHUB_TOKEN}}@github.com/utcarnivaldayo/actions-prac-prod.git"
+          git remote set-url origin "https://${{github.actor}}:${{secrets.GITHUB_TOKEN}}@github.com/utcarnivaldayo/actions-prac-prod"
           git add .
           git commit -m "generated"
           git status
