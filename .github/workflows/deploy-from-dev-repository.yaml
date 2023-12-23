@@ -21,7 +21,7 @@ jobs:
     permissions: write-all
     steps:
       - name: Checkout ${{ env.LOCAL_DEV_REPOSITORY }} repository
-        run: git clone -b main --single-branch --depth=1 https://${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/${{ env.REMOTE_PROD_REPOSITORY }}.git ${{ env.LOCAL_DEV_REPOSITORY }}
+        run: git clone -b main --single-branch --depth=1 https://${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/${{ env.REMOTE_DEV_REPOSITORY }}.git ${{ env.LOCAL_DEV_REPOSITORY }}
       - name: Checkout ${{ env.LOCAL_PROD_REPOSITORY}} repository
         run: git clone -b main --single-branch https://${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/${{ env.REMOTE_PROD_REPOSITORY }}.git ${{ env.LOCAL_PROD_REPOSITORY }}
       - name: Install node
