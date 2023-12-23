@@ -57,7 +57,7 @@ jobs:
           git remote -v
           git config --local user.name ${{ env.GITHUB_NAME }}
           git config --local user.email ${{ env.GITHUB_MAIL }}
-          git remote set-url origin "https://${{ secrets.GITHUB_TOKEN }}@github.com/utcarnivaldayo/actions-prac-prod.git"
+          git remote set-url origin "https://github-actions:${{ secrets.GITHUB_TOKEN }}@github.com/utcarnivaldayo/actions-prac-prod.git"
           git remote -v
           git fetch
           git add .
