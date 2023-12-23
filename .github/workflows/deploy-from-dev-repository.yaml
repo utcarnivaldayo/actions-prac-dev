@@ -42,5 +42,14 @@ jobs:
           cp -pr ${GITHUB_WORKSPACE}/dev/dist/* ${GITHUB_WORKSPACE}/prod/
           cd ${GITHUB_WORKSPACE}/prod
           pwd && ls -la
+      - name: Commit and push to prod repository
+        run: |
+          set -x
+          cd ${GITHUB_WORKSPACE}/prod
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add .
+          git commit --author=. -m 'generated'
+          git push
 
 
