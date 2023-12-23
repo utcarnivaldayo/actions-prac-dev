@@ -6,8 +6,8 @@ on:
   workflow_dispatch:
 
 env:
-  GITHUB_NAME: github-actions
-  GITHUB_MAIL: github-actions@github.com
+  GITHUB_NAME: github-actions[bot]
+  GITHUB_MAIL: 41898282+github-actions[bot]@users.noreply.github.com
 
 permissions: write-all
 
