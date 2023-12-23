@@ -47,6 +47,7 @@ jobs:
       - name: Commit and push to ${{ env.LOCAL_PROD_REPOSITORY }} repository
         run: |
           cd ${{ env.LOCAL_PROD_REPOSITORY }}
+          test -z "$(git diff)" && echo "Already latest." && exit 0
           git config --local user.name "${{ env.GITHUB_NAME }}"
           git config --local user.email "${{ env.GITHUB_MAIL }}"
           git add .
