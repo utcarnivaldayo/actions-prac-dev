@@ -53,6 +53,7 @@ jobs:
           pwd && ls -la
           echo ${{ github.actor }}
           echo ${{ github.repository }}
+          git config -l
           cd ${GITHUB_WORKSPACE}/prod
           git config user.name ${{ env.GITHUB_NAME }}
           git config user.email ${{ env.GITHUB_MAIL }}
