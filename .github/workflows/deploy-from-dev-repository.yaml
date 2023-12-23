@@ -10,7 +10,9 @@ jobs:
   deploy-prod:
     name: deploy-prod
     runs-on: ubuntu-22.04
-    permissions: write-all
+    permissions:
+      contents: write
+      # statuses: write
     steps:
       - name: Checkout dev repository
         uses: actions/checkout@v4
@@ -44,12 +46,17 @@ jobs:
           cd ${GITHUB_WORKSPACE}/prod
           pwd && ls -la
       - name: Commit and push to prod repository
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          MY_CREDENTIALS: my-credentials
         run: |
           set -x
           cd ${GITHUB_WORKSPACE}/prod
           git remote -v
-          git config user.name github-actions
-          git config user.email github-actions@github.com
+          echo "${GITHUB_TOKEN}" > ${GITHUB_WORKSPACE}/${MY_CREDENTIALS}
+          git config --global user.name github-actions
+          git config --global user.email github-actions@github.com
+          git config --global credential.helper store --file ${GITHUB_WORKSPACE}/${MY_CREDENTIALS}
           git add .
           git commit -m "generated"
           git status
