@@ -25,7 +25,13 @@ jobs:
                 node-version: 20.10.0
             - name: Check node and npm version
               run: |
-                cd actions-prac-dev
                 node -v
                 npm -v
-                ls
+            - name: Check node_modules and package-lock.json
+              run: |
+                cd actions-prac-dev
+                ls -al
+                test ! -d node_modules \
+                && echo "[Error]: node_modules does not exist !!!"
+                test ! -e package-lock.json \
+                && echo "[Error]: package-lock.json does not exist !!!"
