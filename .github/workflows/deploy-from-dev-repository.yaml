@@ -54,9 +54,9 @@ jobs:
           cd ${GITHUB_WORKSPACE}/prod
           git remote -v
           echo "${GITHUB_TOKEN}" > ${GITHUB_WORKSPACE}/${MY_CREDENTIALS}
-          git config --global user.name github-actions
-          git config --global user.email github-actions@github.com
-          git config --global credential.helper store --file ${GITHUB_WORKSPACE}/${MY_CREDENTIALS}
+          git config --local user.name github-actions
+          git config --local user.email github-actions@github.com
+          git config --local credential.helper store --file ${GITHUB_WORKSPACE}/${MY_CREDENTIALS}
           git add .
           git commit -m "generated"
           git status
