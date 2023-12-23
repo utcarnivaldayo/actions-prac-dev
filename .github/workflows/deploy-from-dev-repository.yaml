@@ -47,6 +47,7 @@ jobs:
       - name: Commit and push to prod repository
         run: |
             set -x
+            cd ${GITHUB_WORKSPACE}/prod
             git remote -v
             git config user.name github-actions
             git config user.email github-actions@github.com
