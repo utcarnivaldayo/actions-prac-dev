@@ -43,6 +43,9 @@ jobs:
           cd ${GITHUB_WORKSPACE}/prod
           pwd && ls -la
       - name: Commit and push to prod repository
+        env:
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          GITHUB_REPOSITORY: utcarnivaldayo/actions-prac-prod
         run: |
           set -x
           cd ${GITHUB_WORKSPACE}/prod
@@ -50,6 +53,6 @@ jobs:
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
           git add .
           git commit --author=. -m 'generated'
-          git push origin main
+          git push https://x-access-token:${ACCESS_TOKEN}@github.com/${GITHUB_REPOSITORY} origin main
 
 
