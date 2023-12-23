@@ -22,10 +22,10 @@ jobs:
         with:
           path: dev
       - name: Checkout prod repository
-        uses: actions/checkout@v4
-        with:
-          repository: utcarnivaldayo/actions-prac-prod
-          path: prod
+        run: |
+          git clone https://github.com/utcarnivaldayo/actions-prac-prod.git prod
+          cd prod
+          git switch main
       - name: Install node
         uses: actions/setup-node@v4
         with:
