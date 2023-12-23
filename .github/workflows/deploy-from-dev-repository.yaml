@@ -6,8 +6,8 @@ on:
   workflow_dispatch:
 
 env:
-  GITHUB_MAIL: 41898282+github-actions[bot]@users.noreply.github.com
-  GITHUB_NAME: github-actions[bot]
+  GITHUB_NAME: github-actions
+  GITHUB_MAIL: github-actions@github.com
 
 permissions: write-all
 
@@ -50,13 +50,8 @@ jobs:
           pwd && ls -la
       - name: Commit and push to prod repository
         run: |
-          set -x
-          cd ${GITHUB_WORKSPACE}/prod
-          git remote -v
           git config --global user.name ${{ env.GITHUB_NAME }}
           git config --global user.email ${{ env.GITHUB_MAIL }}
-          git remote set-url origin "https://github-actions:${{ secrets.GITHUB_TOKEN }}@github.com/utcarnivaldayo/actions-prac-prod.git"
-          git remote -v
           git add .
           git commit -m "generated"
           git status
