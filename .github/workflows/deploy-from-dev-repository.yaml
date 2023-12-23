@@ -60,6 +60,7 @@ jobs:
           cd ${GITHUB_WORKSPACE}/prod
           git add .
           git commit --author=. -m 'generated'
+          git status
           git push https://x-access-token:${ACCESS_TOKEN}@github.com/${GITHUB_REPOSITORY}
 
 
