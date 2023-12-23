@@ -19,13 +19,13 @@ jobs:
               with:
                 repository: utcarnivaldayo/actions-prac-prod
                 path: actions-prac-prod
-            - name: install node
+            - name: Install node
               uses: actions/setup-node@v4
               with:
                 node-version: 20.10.0
-            - run: |
+            - name: Check node and npm version
+              run: |
                 cd actions-prac-dev
                 node -v
-                npm ci
-                npm run build
+                npm -v
                 ls
