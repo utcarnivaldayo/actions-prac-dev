@@ -52,7 +52,6 @@ jobs:
       - name: Commit and push to prod repository
         run: |
           cd ${GITHUB_WORKSPACE}/prod
-          git config user.email ${{ env.GITHUB_MAIL }}
           git add .
           git commit -m "generated"
           git push
