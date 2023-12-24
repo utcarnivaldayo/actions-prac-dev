@@ -25,9 +25,16 @@ jobs:
       - name: Checkout ${{ env.LOCAL_PROD_REPOSITORY}} repository
         run: git clone -b main --single-branch https://${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/${{ env.REMOTE_PROD_REPOSITORY }}.git ${{ env.LOCAL_PROD_REPOSITORY }}
       - name: Install node
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSIOIN }}
+        run: |
+          sudo apt-get -y update
+          sudo apt-get --no-install-recommends -y install sudo ca-certificates tzdata tini \
+          sudo apt-get -s dist-upgrade | grep "^Inst" | grep -i securi | awk -F " " {'print $2'} | xargs apt-get install \
+          sudo apt-get nodejs npm
+          sudo apt-get install n -g
+          sudo npm update npm -g
+          sudo apt-get purge nodejs npm
+          sudp n --lts
+          sudo n ${{env.NODE_VERSIOIN}}
       - name: Install node modules
         run: |
           cd ${{ env.LOCAL_DEV_REPOSITORY }}
