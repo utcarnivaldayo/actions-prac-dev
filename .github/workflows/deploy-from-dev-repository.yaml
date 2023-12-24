@@ -75,4 +75,5 @@ jobs:
           git config --local user.email "${{ env.GITHUB_MAIL }}"
           git add .
           git commit -m "generated"
+          test ${{env.DRY_RUN}} = 'true' && echo '===== dry run ===== '
           git push -u $(test ${{env.DRY_RUN}} = 'true' && echo '-n') origin main
