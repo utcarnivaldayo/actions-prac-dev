@@ -28,7 +28,7 @@ jobs:
         run: |
           sudo apt -y update
           sudo apt --no-install-recommends -y install nodejs npm
-          sudo apt --no-install-recommends -y install n -g
+          sudo apt --no-install-recommends -y install n
           sudo npm update npm -g
           sudo apt purge nodejs npm
           sudp n --lts
