@@ -18,8 +18,8 @@ on:
         default: true
 
 env:
-  GITHUB_NAME: github-actions[bot]
-  GITHUB_MAIL: 41898282+github-actions[bot]@users.noreply.github.com
+  BOT_GITHUB_NAME: github-actions[bot]
+  BOT_GITHUB_MAIL: 41898282+github-actions[bot]@users.noreply.github.com
   REMOTE_DEV_REPOSITORY: utcarnivaldayo/actions-prac-dev
   REMOTE_PROD_REPOSITORY: utcarnivaldayo/actions-prac-prod
   LOCAL_DEV_REPOSITORY: dev
@@ -73,8 +73,8 @@ jobs:
       - name: Commit and push to ${{ env.LOCAL_PROD_REPOSITORY }} repository
         run: |
           cd ${{ env.LOCAL_PROD_REPOSITORY }}
-          git config --local user.name "${{ env.GITHUB_NAME }}"
-          git config --local user.email "${{ env.GITHUB_MAIL }}"
+          git config --local user.name "${{ env.BOT_GITHUB_NAME }}"
+          git config --local user.email "${{ env.BOT_GITHUB_MAIL }}"
           git add .
           git commit -m "generated"
           if [ ${{env.DRY_RUN}} = 'false' ]; then
