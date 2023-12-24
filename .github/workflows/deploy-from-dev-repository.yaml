@@ -27,7 +27,6 @@ jobs:
       - name: Install node
         run: |
           sudo apt -y update
-          sudo apt --no-install-recommends -y install sudo ca-certificates tzdata tini \
           sudo apt --no-install-recommends -y install nodejs npm
           sudo apt --no-install-recommends -y install n -g
           sudo npm update npm -g
