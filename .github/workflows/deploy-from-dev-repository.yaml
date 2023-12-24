@@ -70,7 +70,7 @@ jobs:
       - name: Commit and push to ${{ env.LOCAL_PROD_REPOSITORY }} repository
         run: |
           cd ${{ env.LOCAL_PROD_REPOSITORY }}
-          test -z "$(git diff)" && echo "Already latest build." && exit 0
+          test -z "$(git diff)" && echo "Warning: Already latest build." && exit 0
           git config --local user.name "${{ env.GITHUB_NAME }}"
           git config --local user.email "${{ env.GITHUB_MAIL }}"
           git add .
