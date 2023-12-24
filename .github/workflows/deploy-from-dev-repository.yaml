@@ -4,6 +4,18 @@ on:
     tags:
       - v*
   workflow_dispatch:
+    # NOTE: inputsのデフォルト値を変更した場合はenvのデフォルト値も変更すること
+    inputs:
+      NODE_VERSIOIN:
+        type: string
+        description: 'node version'
+        required: true
+        default: 20.10.0
+      DRY_RUN:
+        type: boolean
+        description: 'dry run'
+        required: true
+        default: true
 
 env:
   GITHUB_NAME: github-actions[bot]
@@ -12,18 +24,24 @@ env:
   REMOTE_PROD_REPOSITORY: utcarnivaldayo/actions-prac-prod
   LOCAL_DEV_REPOSITORY: dev
   LOCAL_PROD_REPOSITORY: prod
-  NODE_VERSIOIN: 20.10.0
+  # 作成したPERSONAL_ACCESS_TOKENの格納場所
+  ## Settings -> Screts and variavbles -> Actions -> Repository secrets -> New repository secret
+  PAT: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+  # NOTE: envのデフォルト値を変更した場合はinputsのデフォルト値も変更すること
+  NODE_VERSIOIN: ${{ inputs.NODE_VERSIOIN || '20.10.0' }}
+  DRY_RUN: ${{ inputs.DRY_RUN || false }}
 
 jobs:
   deploy-prod:
     name: deploy-prod
     runs-on: ubuntu-22.04
-    permissions: write-all
+    permissions:
+      contents: write
     steps:
       - name: Checkout ${{ env.LOCAL_DEV_REPOSITORY }} repository
-        run: git clone -b main --single-branch --depth=1 https://${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/${{ env.REMOTE_DEV_REPOSITORY }}.git ${{ env.LOCAL_DEV_REPOSITORY }}
+        run: git clone -b main --single-branch --depth=1 https://${{ env.PAT }}@github.com/${{ env.REMOTE_DEV_REPOSITORY }}.git ${{ env.LOCAL_DEV_REPOSITORY }}
       - name: Checkout ${{ env.LOCAL_PROD_REPOSITORY}} repository
-        run: git clone -b main --single-branch https://${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/${{ env.REMOTE_PROD_REPOSITORY }}.git ${{ env.LOCAL_PROD_REPOSITORY }}
+        run: git clone -b main --single-branch https://${{ env.PAT }}@github.com/${{ env.REMOTE_PROD_REPOSITORY }}.git ${{ env.LOCAL_PROD_REPOSITORY }}
       - name: Install node
         run: |
           sudo apt -y update
@@ -52,9 +70,9 @@ jobs:
       - name: Commit and push to ${{ env.LOCAL_PROD_REPOSITORY }} repository
         run: |
           cd ${{ env.LOCAL_PROD_REPOSITORY }}
-          test -z "$(git diff)" && echo "Already latest." && exit 0
+          test -z "$(git diff)" && echo "Already latest build." && exit 0
           git config --local user.name "${{ env.GITHUB_NAME }}"
           git config --local user.email "${{ env.GITHUB_MAIL }}"
           git add .
           git commit -m "generated"
-          git push -u origin main
+          git push -u $(test ${{env.DRY_RUN}} = 'true' && echo '-n') origin main
