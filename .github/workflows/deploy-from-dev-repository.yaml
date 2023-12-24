@@ -80,5 +80,5 @@ jobs:
             git push -u origin main
           else
             echo '===== dry run ====='
-            git push -nu origin main
+            git push -n -u origin main
           fi
