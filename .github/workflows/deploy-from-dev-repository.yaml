@@ -28,11 +28,11 @@ jobs:
         run: |
           sudo apt -y update
           sudo apt --no-install-recommends -y install nodejs npm
-          sudo apt --no-install-recommends -y install n
+          sudo npm install n -g
+          sudo n --lts
+          sudo n ${{env.NODE_VERSIOIN}}
           sudo npm update npm -g
           sudo apt purge nodejs npm
-          sudp n --lts
-          sudo n ${{env.NODE_VERSIOIN}}
       - name: Install node modules
         run: |
           cd ${{ env.LOCAL_DEV_REPOSITORY }}
