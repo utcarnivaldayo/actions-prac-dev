@@ -26,13 +26,12 @@ jobs:
         run: git clone -b main --single-branch https://${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/${{ env.REMOTE_PROD_REPOSITORY }}.git ${{ env.LOCAL_PROD_REPOSITORY }}
       - name: Install node
         run: |
-          sudo apt-get -y update
-          sudo apt-get --no-install-recommends -y install sudo ca-certificates tzdata tini \
-          sudo apt-get -s dist-upgrade | grep "^Inst" | grep -i securi | awk -F " " {'print $2'} | xargs apt-get install \
-          sudo apt-get nodejs npm
-          sudo apt-get install n -g
+          sudo apt -y update
+          sudo apt --no-install-recommends -y install sudo ca-certificates tzdata tini \
+          sudo apt --no-install-recommends -y install nodejs npm
+          sudo apt --no-install-recommends -y install n -g
           sudo npm update npm -g
-          sudo apt-get purge nodejs npm
+          sudo apt purge nodejs npm
           sudp n --lts
           sudo n ${{env.NODE_VERSIOIN}}
       - name: Install node modules
