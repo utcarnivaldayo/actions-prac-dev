@@ -41,7 +41,9 @@ jobs:
       - name: Checkout ${{ env.LOCAL_DEV_REPOSITORY }} repository
         run: git clone -b main --single-branch --depth=1 https://${{ env.PAT }}@github.com/${{ env.REMOTE_DEV_REPOSITORY }}.git ${{ env.LOCAL_DEV_REPOSITORY }}
       - name: Checkout ${{ env.LOCAL_PROD_REPOSITORY}} repository
-        run: git clone -b main --single-branch https://${{ env.PAT }}@github.com/${{ env.REMOTE_PROD_REPOSITORY }}.git ${{ env.LOCAL_PROD_REPOSITORY }}
+        run: |
+          git clone -b main --single-branch https://${{ env.PAT }}@github.com/${{ env.REMOTE_PROD_REPOSITORY }}.git ${{ env.LOCAL_PROD_REPOSITORY }}
+          git clean -fdx && test $(git ls-files | wc -l) -eq 0 || git rm -rf .
       - name: Install node
         run: |
           sudo apt -y update
@@ -70,14 +72,13 @@ jobs:
       - name: Commit and push to ${{ env.LOCAL_PROD_REPOSITORY }} repository
         run: |
           cd ${{ env.LOCAL_PROD_REPOSITORY }}
-          test -z "$(git diff)" && echo "Warning: Already latest build." && exit 0
           git config --local user.name "${{ env.GITHUB_NAME }}"
           git config --local user.email "${{ env.GITHUB_MAIL }}"
           git add .
           git commit -m "generated"
           if [ ${{env.DRY_RUN}} = 'false' ]; then
-            echo '===== dry run ===== '
             git push -u origin main
           else
+            echo '===== dry run ====='
             git push -nu origin main
           fi
