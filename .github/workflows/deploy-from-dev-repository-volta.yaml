@@ -40,28 +40,29 @@ jobs:
     steps:
       - name: Checkout ${{ env.LOCAL_DEV_REPOSITORY }} repository
         run: git clone -b main --single-branch --depth=1 https://${{ env.PAT }}@github.com/${{ env.REMOTE_DEV_REPOSITORY }}.git ${{ env.LOCAL_DEV_REPOSITORY }}
+        shell: bash
       - name: Checkout ${{ env.LOCAL_PROD_REPOSITORY}} repository
         run: |
           git clone -b main --single-branch https://${{ env.PAT }}@github.com/${{ env.REMOTE_PROD_REPOSITORY }}.git ${{ env.LOCAL_PROD_REPOSITORY }}
           cd ${{ env.LOCAL_PROD_REPOSITORY }}
           git clean -fdx && test $(git ls-files | wc -l) -eq 0 || git rm -rf .
+        shell: bash
       - name: Install node with volta
         run: |
           curl https://get.volta.sh | bash
-          echo $USER
-          echo 'export VOLTA_HOME="$HOME/.volta"' >> /root/.bashrc
-          echo 'export PATH="$VOLTA_HOME/bin:$PATH"' >> /root/.bashrc
+          echo $HOME
+          ${HOME}/.volta/bin/volta setup
+        shell: bash
       - name: Install node modules
         run: |
           cd ${{ env.LOCAL_DEV_REPOSITORY }}
           pwd && ls -la
           test ! -e package-lock.json && echo "Error: package-lock.json does not exist." && exit 1
-          cat ${HOME}/.bashrc
-          /etc/profile
           volta -v
           node -v
           npm -v
           npm install
+        shell: bash
       - name: Build react
         run: |
           cd ${{ env.LOCAL_DEV_REPOSITORY }}
