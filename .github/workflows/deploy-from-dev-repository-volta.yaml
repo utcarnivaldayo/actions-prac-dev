@@ -62,6 +62,8 @@ jobs:
           node -v
           npm -v
           npm install
+          ${HOME}/.volta/bin/volta list all
+          ${HOME}/.volta/bin/volta -v
         shell: bash
       - name: Build react
         run: |
