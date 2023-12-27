@@ -59,6 +59,7 @@ jobs:
           rm -f $(which npm)
       - name: Install node with volta
         run: |
+          set -x
           curl https://get.volta.sh | bash
           ${HOME}/.volta/bin/volta -v
           cd ${{ env.LOCAL_DEV_REPOSITORY }}
