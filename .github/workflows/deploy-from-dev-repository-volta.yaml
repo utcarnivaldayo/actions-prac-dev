@@ -49,9 +49,6 @@ jobs:
         shell: bash
       - name: Install node with volta
         run: |
-          set -x
-          node -v
-          npm -v
           curl https://get.volta.sh | bash -s -- --skip-setup
         shell: bash
       - name: Install node modules
@@ -59,8 +56,11 @@ jobs:
           set -x
           cd ${{ env.LOCAL_DEV_REPOSITORY }}
           pwd && ls -la
+          jq -V
+          ${HOME}/.volta/bin/volta install node@$(jq -r .volta.node package.json)
           test ! -e package-lock.json && echo "Error: package-lock.json does not exist." && exit 1
           ${HOME}/.volta/bin/volta run --bundled-npm npm ci
+          node -v
         shell: bash
       - name: Build react
         run: |
