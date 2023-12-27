@@ -48,8 +48,8 @@ jobs:
       - name: Install node with volta
         run: |
           curl https://get.volta.sh | bash
-          source ~/.bashrc
-          volta install node@${{env.NODE_VERSIOIN}}
+          ls -la
+          ${{ github.workspace }}/.volta/bin/volta install node@${{env.NODE_VERSIOIN}}
       - name: Install node modules
         run: |
           cd ${{ env.LOCAL_DEV_REPOSITORY }}
