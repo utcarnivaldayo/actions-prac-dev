@@ -58,6 +58,7 @@ jobs:
           ${HOME}/.volta/bin/volta -v
           cd ${{ env.LOCAL_DEV_REPOSITORY }}
           pwd && ls -la
+          jq -V
           test ! -e package.json && echo "Error: package.json does not exist." && exit 1
           ${HOME}/.volta/bin/volta install node@$(jq -r .volta.node package.json)
           test ! -e package-lock.json && echo "Error: package-lock.json does not exist." && exit 1
