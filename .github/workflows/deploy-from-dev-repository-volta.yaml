@@ -63,6 +63,7 @@ jobs:
           test ! -e package-lock.json && echo "Error: package-lock.json does not exist." && exit 1
           npm ci
           node -v
+          npom-v
         shell: bash
       - name: Build react
         run: |
