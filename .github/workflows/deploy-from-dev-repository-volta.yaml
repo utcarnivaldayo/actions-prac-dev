@@ -49,6 +49,7 @@ jobs:
         run: |
           curl https://get.volta.sh | bash
           ls -la
+          ls -la ${HOME}
           ${{ github.workspace }}/.volta/bin/volta install node@${{env.NODE_VERSIOIN}}
       - name: Install node modules
         run: |
