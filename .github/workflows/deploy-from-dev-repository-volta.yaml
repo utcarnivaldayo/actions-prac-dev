@@ -6,11 +6,6 @@ on:
   workflow_dispatch:
     # NOTE: inputsのデフォルト値を変更した場合はenvのデフォルト値も変更すること
     inputs:
-      NODE_VERSIOIN:
-        type: string
-        description: 'node version'
-        required: true
-        default: 20.10.0
       DRY_RUN:
         type: boolean
         description: 'dry run'
@@ -28,7 +23,6 @@ env:
   ## Settings -> Screts and variavbles -> Actions -> Repository secrets -> New repository secret
   PAT: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
   # NOTE: envのデフォルト値を変更した場合はinputsのデフォルト値も変更すること
-  NODE_VERSIOIN: ${{ inputs.NODE_VERSIOIN || '20.10.0' }}
   DRY_RUN: ${{ inputs.DRY_RUN || false }}
 
 jobs:
