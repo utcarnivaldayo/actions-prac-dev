@@ -48,15 +48,14 @@ jobs:
       - name: Install node with volta
         run: |
           curl https://get.volta.sh | bash
-          ${HOME}/.volta/bin/volta install node@${{env.NODE_VERSIOIN}}
       - name: Install node modules
         run: |
           cd ${{ env.LOCAL_DEV_REPOSITORY }}
           pwd && ls -la
           test ! -e package-lock.json && echo "Error: package-lock.json does not exist." && exit 1
+          npm install
           node -v
           npm -v
-          npm ci
       - name: Build react
         run: |
           cd ${{ env.LOCAL_DEV_REPOSITORY }}
