@@ -39,25 +39,28 @@ jobs:
       contents: write
     steps:
       - name: Checkout ${{ env.LOCAL_DEV_REPOSITORY }} repository
-        run: git clone -b main --single-branch --depth=1 https://${{ env.PAT }}@github.com/${{ env.REMOTE_DEV_REPOSITORY }}.git ${{ env.LOCAL_DEV_REPOSITORY }}
-        shell: bash
+        run: |
+          set -x
+          git -v
+          git clone -b main --single-branch --depth=1 https://${{ env.PAT }}@github.com/${{ env.REMOTE_DEV_REPOSITORY }}.git ${{ env.LOCAL_DEV_REPOSITORY }}
       - name: Checkout ${{ env.LOCAL_PROD_REPOSITORY}} repository
         run: |
+          set -x
+          git -v
           git clone -b main --single-branch https://${{ env.PAT }}@github.com/${{ env.REMOTE_PROD_REPOSITORY }}.git ${{ env.LOCAL_PROD_REPOSITORY }}
           cd ${{ env.LOCAL_PROD_REPOSITORY }}
           git clean -fdx && test $(git ls-files | wc -l) -eq 0 || git rm -rf .
-        shell: bash
-      - name: Install node with volta
+      - name: Delete default node and npm
         run: |
+          set -x
           node -v
           npm -v
           rm -f $(which node)
           rm -f $(which npm)
-          curl https://get.volta.sh | bash
-        shell: bash
-      - name: Install node modules
+      - name: Install node with volta
         run: |
-          set -x
+          curl https://get.volta.sh | bash
+          ${HOME}/.volta/bin/volta -v
           cd ${{ env.LOCAL_DEV_REPOSITORY }}
           pwd && ls -la
           test ! -e package.json && echo "Error: package.json does not exist." && exit 1
@@ -65,21 +68,30 @@ jobs:
           test ! -e package-lock.json && echo "Error: package-lock.json does not exist." && exit 1
           ${HOME}/.volta/bin/volta which node
           ${HOME}/.volta/bin/volta which npm
+      - name: Install node modules
+        run: |
+          set -x
+          cd ${{ env.LOCAL_DEV_REPOSITORY }}
+          ${HOME}/.volta/bin/volta -v
           ${HOME}/.volta/bin/volta run --bundled-npm npm ci
         shell: bash
       - name: Build react
         run: |
+          set -x
           cd ${{ env.LOCAL_DEV_REPOSITORY }}
-          pwd && ls -la
+          ${HOME}/.volta/bin/volta -v
           ${HOME}/.volta/bin/volta run --bundled-npm npm run build
       - name: Copy build artifacts
         run: |
+          set -x
           cp -pr ${{ env.LOCAL_DEV_REPOSITORY }}/dist/* ${{ env.LOCAL_PROD_REPOSITORY }}/
           cd ${{ env.LOCAL_PROD_REPOSITORY }}
           pwd && ls -la
       - name: Commit and push to ${{ env.LOCAL_PROD_REPOSITORY }} repository
         run: |
+          set -x
           cd ${{ env.LOCAL_PROD_REPOSITORY }}
+          git -v
           git config --local user.name "${{ env.BOT_GITHUB_NAME }}"
           git config --local user.email "${{ env.BOT_GITHUB_MAIL }}"
           git add .
