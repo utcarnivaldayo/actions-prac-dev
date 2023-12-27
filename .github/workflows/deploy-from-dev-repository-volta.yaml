@@ -48,6 +48,7 @@ jobs:
       - name: Install node with volta
         run: |
           curl https://get.volta.sh | bash
+          echo $USER
           echo 'export VOLTA_HOME="$HOME/.volta"' >> /root/.bashrc
           echo 'export PATH="$VOLTA_HOME/bin:$PATH"' >> /root/.bashrc
       - name: Install node modules
