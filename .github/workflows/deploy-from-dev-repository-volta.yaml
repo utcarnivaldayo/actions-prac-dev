@@ -1,4 +1,4 @@
-name: Deploy from dev repository
+name: Deploy from dev repository with volta
 on:
   push:
     tags:
