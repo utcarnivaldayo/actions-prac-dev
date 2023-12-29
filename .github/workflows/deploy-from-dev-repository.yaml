@@ -44,7 +44,7 @@ jobs:
         run: |
           git clone -b main --single-branch https://${{ env.PAT }}@github.com/${{ env.REMOTE_PROD_REPOSITORY }}.git ${{ env.LOCAL_PROD_REPOSITORY }}
           cd ${{ env.LOCAL_PROD_REPOSITORY }}
-          git clean -fdx && test $(git ls-files | wc -l) -eq 0 || git rm -rf .
+          git clean -fdx && test $(git ls-files | wc -l) -eq 0 || ls | grep -v "README.md" | xargs git rm -rf
       - name: Install node
         run: |
           sudo apt -y update
