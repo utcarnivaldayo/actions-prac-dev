@@ -7,8 +7,9 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Link } from "react-router-dom";
 import Paths from "../paths";
+import React from "react";
 
-const AppHeader = () => {
+const AppHeader: React.FC = () => {
     const toolBarItems = Object.entries({ ...Paths });
     console.log(toolBarItems);
 

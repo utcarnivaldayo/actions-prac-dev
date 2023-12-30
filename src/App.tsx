@@ -9,6 +9,7 @@ import HomeView from "./pages/home";
 import LearnView from "./pages/learn";
 import DesignView from "./pages/design";
 import DatabaseView from "./pages/database";
+import ProfileView from "./pages/profile";
 import Paths from "./paths";
 
 
@@ -23,7 +24,7 @@ const theme = createTheme({
   },
 });
 
-const App = () => {
+const App: React.FC = () => {
 
   return (
     <>
@@ -34,6 +35,7 @@ const App = () => {
           <Route path={Paths.learn()} element={<LearnView />} />
           <Route path={Paths.design()} element={<DesignView />} />
           <Route path={Paths.database()} element={<DatabaseView />} />
+          <Route path={Paths.profile()} element={<ProfileView />} />
         </Routes>
       </ThemeProvider >
     </>
