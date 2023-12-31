@@ -15,7 +15,6 @@ export const Page: React.FC<PageProps> = (props: PageProps) => {
             <AppHeader />
             <Toolbar />
             {children}
-            <Toolbar />
             <AppFooter />
         </Box>
     );

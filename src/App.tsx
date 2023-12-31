@@ -19,7 +19,8 @@ const theme = createTheme({
     secondary: MUIColor.lightBlue,
     background: {
       default: '#bdc3c7',
-      paper: '#cacfd2',
+      // paper: '#cacfd2',
+      paper: '#ecf0f1',
     },
   },
 });

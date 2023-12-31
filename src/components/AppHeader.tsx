@@ -8,6 +8,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { Link } from "react-router-dom";
 import Paths from "../paths";
 import React from "react";
+import Button from '@mui/material/Button';
 
 const AppHeader: React.FC = () => {
     const toolBarItems = Object.entries({ ...Paths });
@@ -20,7 +21,7 @@ const AppHeader: React.FC = () => {
 
     return (
         <Box sx={{ flexGrow: 1, boxShadow: 1 }}>
-            <AppBar position="static">
+            <AppBar position="fixed">
                 <Container fixed disableGutters>
                     <Toolbar>
                         <IconButton
@@ -35,9 +36,11 @@ const AppHeader: React.FC = () => {
                         <Box sx={{ display: 'inline-flex', justifyContent: 'flex-start' }}>
                             {toolBarItems.map(([key, path]) => {
                                 return (
-                                    <Typography key={key} variant="h6" component="div" m={1} p={1}>
-                                        <Link to={path()} color="primary">{capitalize(key)}</Link>
-                                    </Typography>
+                                    <Button key={key} variant="text" color="inherit" size="small" component={Link} to={path()}>
+                                        <Typography variant="h6" component="div" m={1} p={1}>
+                                            {capitalize(key)}
+                                        </Typography>
+                                    </Button>
                                 );
                             })}
                         </Box>
