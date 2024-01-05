@@ -19,7 +19,7 @@ env:
   PAT: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
 jobs:
-  deploy-prod:
+  test-npm-run-build:
     name:
     runs-on: ubuntu-22.04
     steps:
