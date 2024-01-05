@@ -23,7 +23,7 @@ const HomeView: React.FC = () => {
         <Page>
             <Container fixed>
                 <Typography variant="h1" component="h1" align="center" p={5} m={5}>
-                    Hello, World!
+                    Hello, World!!!
                 </Typography>
             </Container>
             {/* cards */}
