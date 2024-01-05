@@ -4,9 +4,6 @@ on:
     branches:
       - main
       - dev
-  pull_request:
-    branches:
-      - main
   workflow_dispatch:
 
 env:
@@ -27,7 +24,7 @@ jobs:
         run: |
           set -x
           git -v
-          git clone -b main --single-branch --depth=1 https://${{ env.PAT }}@github.com/${{ env.REMOTE_DEV_REPOSITORY }}.git ${{ env.LOCAL_DEV_REPOSITORY }}
+          git clone -b ${{ github.ref_name }} --single-branch --depth=1 https://${{ env.PAT }}@github.com/${{ env.REMOTE_DEV_REPOSITORY }}.git ${{ env.LOCAL_DEV_REPOSITORY }}
       - name: Delete default node and npm
         run: |
           set -x
